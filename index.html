@@ -1,149 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hindu Warriors Calendar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hindu Warrior Calendar</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
-        h1 {
-            margin-bottom: 10px;
-        }
+<style>
 
-        button {
-            padding: 8px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(rgba(255,120,0,0.9),rgba(255,120,0,0.9)),
+url('https://images.unsplash.com/photo-1599669454699-248893623440?q=80&w=2070');
+background-size:cover;
+background-attachment:fixed;
+color:white;
+overflow-x:hidden;
+}
 
-        .calendar-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
+header{
+text-align:center;
+padding:20px;
+}
 
-        .month {
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
+select{
+padding:8px 15px;
+border-radius:20px;
+border:none;
+font-size:16px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+h1{
+font-family:'Cinzel',serif;
+font-size:48px;
+margin:20px 0;
+letter-spacing:3px;
+text-shadow:2px 2px 10px black;
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 5px;
-            font-size: 14px;
-        }
+.container{
+display:flex;
+justify-content:space-between;
+padding:20px 5%;
+flex-wrap:wrap;
+}
 
-        th {
-            background: #ff9933;
-            color: white;
-        }
+.side{
+width:45%;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
 
-        .credit {
-            position: fixed;
-            bottom: 10px;
-            right: 15px;
-            font-size: 14px;
-            font-weight: bold;
-            color: black;
-        }
-    </style>
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(10px);
+border-radius:20px;
+padding:15px;
+text-align:center;
+cursor:pointer;
+transition:0.4s;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.05);
+background:rgba(255,255,255,0.25);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:15px;
+}
+
+.card h3{
+margin-top:10px;
+font-size:18px;
+}
+
+.details-panel{
+position:fixed;
+bottom:-100%;
+left:0;
+right:0;
+background:white;
+color:black;
+padding:30px;
+border-radius:30px 30px 0 0;
+box-shadow:0 -5px 20px rgba(0,0,0,0.5);
+transition:0.6s;
+max-height:70vh;
+overflow:auto;
+}
+
+.details-panel.active{
+bottom:0;
+}
+
+.close-btn{
+text-align:right;
+font-size:20px;
+cursor:pointer;
+color:red;
+}
+
+@media(max-width:900px){
+.side{
+width:100%;
+}
+}
+
+</style>
 </head>
-
 <body>
 
-<h1>Hindu Warriors Calendar</h1>
-<h2 id="yearTitle"></h2>
+<header>
+<select>
+<option>2026 (Current Year)</option>
+<option>2025 (Previous Year)</option>
+</select>
 
-<button onclick="nextYear()">Next Year ➜</button>
+<h1>🔥 HINDU WARRIOR CALENDAR 🔥</h1>
+</header>
 
-<div class="calendar-container" id="calendar"></div>
+<div class="container">
 
-<div class="credit">© Made by Vaibhav Rishi</div>
+<div class="side">
+
+<div class="card" onclick="showDetails('pratap')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Maharana_Pratap.jpg">
+<h3>Maharana Pratap</h3>
+</div>
+
+<div class="card" onclick="showDetails('shivaji')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Shivaji_British_Museum.jpg">
+<h3>Shivaji Maharaj</h3>
+</div>
+
+<div class="card" onclick="showDetails('bhagat')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Bhagat_Singh_1929.jpg">
+<h3>Bhagat Singh</h3>
+</div>
+
+<div class="card" onclick="showDetails('azad')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Chandra_Shekhar_Azad.jpg">
+<h3>Chandrashekhar Azad</h3>
+</div>
+
+</div>
+
+<div class="side">
+
+<div class="card" onclick="showDetails('bose')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Subhas_Chandra_Bose.jpg">
+<h3>Subhash Chandra Bose</h3>
+</div>
+
+<div class="card" onclick="showDetails('lakshmi')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Rani_of_Jhansi.jpg">
+<h3>Rani Lakshmi Bai</h3>
+</div>
+
+<div class="card" onclick="showDetails('peshwa')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Bajirao_I.jpg">
+<h3>Bajirao Peshwa</h3>
+</div>
+
+<div class="card" onclick="showDetails('prithvi')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Prithviraj_Chauhan.jpg">
+<h3>Prithviraj Chauhan</h3>
+</div>
+
+</div>
+
+</div>
+
+<div class="details-panel" id="details">
+<div class="close-btn" onclick="closePanel()">✖ Close</div>
+<div id="detailsContent"></div>
+</div>
 
 <script>
 
-let currentYear = new Date().getFullYear();
+function showDetails(name){
 
-function generateCalendar(year) {
+let data = {
 
-    document.getElementById("yearTitle").innerText = year;
-    const container = document.getElementById("calendar");
-    container.innerHTML = "";
+pratap: `
+<h2>Maharana Pratap</h2>
+<p><b>Birth:</b> 9 May 1540 | <b>जन्म:</b> 9 मई 1540</p>
+<p><b>Swargwas:</b> 19 January 1597 | <b>स्वर्गवास:</b> 19 जनवरी 1597</p>
+<p>Fought against Mughal Empire (Akbar). मेवाड़ की स्वतंत्रता के प्रतीक।</p>
+`,
 
-    const months = [
-        "January","February","March","April","May","June",
-        "July","August","September","October","November","December"
-    ];
+shivaji: `
+<h2>Chhatrapati Shivaji Maharaj</h2>
+<p><b>Birth:</b> 19 February 1630 | <b>जन्म:</b> 19 फरवरी 1630</p>
+<p><b>Swargwas:</b> 3 April 1680 | <b>स्वर्गवास:</b> 3 अप्रैल 1680</p>
+<p>Founder of Maratha Empire. औरंगज़ेब के विरुद्ध संघर्ष।</p>
+`,
 
-    for (let m = 0; m < 12; m++) {
+bhagat: `
+<h2>Bhagat Singh</h2>
+<p><b>Birth:</b> 28 September 1907 | <b>जन्म:</b> 28 सितंबर 1907</p>
+<p><b>Shahadat:</b> 23 March 1931 | <b>शहादत:</b> 23 मार्च 1931</p>
+<p>Revolutionary against British rule.</p>
+`,
 
-        let monthDiv = document.createElement("div");
-        monthDiv.className = "month";
+azad: `
+<h2>Chandrashekhar Azad</h2>
+<p><b>Birth:</b> 23 July 1906 | <b>जन्म:</b> 23 जुलाई 1906</p>
+<p><b>Shahadat:</b> 27 February 1931 | <b>शहादत:</b> 27 फरवरी 1931</p>
+<p>Freedom fighter and fearless revolutionary.</p>
+`
 
-        let title = document.createElement("h3");
-        title.innerText = months[m];
-        monthDiv.appendChild(title);
+};
 
-        let table = document.createElement("table");
-
-        let headerRow = document.createElement("tr");
-        let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-        days.forEach(day => {
-            let th = document.createElement("th");
-            th.innerText = day;
-            headerRow.appendChild(th);
-        });
-
-        table.appendChild(headerRow);
-
-        let firstDay = new Date(year, m, 1).getDay();
-        let daysInMonth = new Date(year, m + 1, 0).getDate();
-
-        let row = document.createElement("tr");
-
-        for (let i = 0; i < firstDay; i++) {
-            row.appendChild(document.createElement("td"));
-        }
-
-        for (let d = 1; d <= daysInMonth; d++) {
-
-            if (row.children.length === 7) {
-                table.appendChild(row);
-                row = document.createElement("tr");
-            }
-
-            let cell = document.createElement("td");
-            cell.innerText = d;
-            row.appendChild(cell);
-        }
-
-        table.appendChild(row);
-        monthDiv.appendChild(table);
-        container.appendChild(monthDiv);
-    }
+document.getElementById("detailsContent").innerHTML = data[name];
+document.getElementById("details").classList.add("active");
 }
 
-function nextYear() {
-    currentYear++;
-    generateCalendar(currentYear);
+function closePanel(){
+document.getElementById("details").classList.remove("active");
 }
-
-generateCalendar(currentYear);
 
 </script>
 
