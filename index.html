@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
 
 <style>
-
 body{
 margin:0;
 font-family:Poppins;
@@ -17,7 +16,7 @@ color:white;
 text-align:center;
 }
 
-/* TOP */
+/* TOP SECTION */
 .top{
 position:relative;
 padding:40px 10px;
@@ -29,51 +28,61 @@ background-position:center;
 
 .title{
 font-family:Cinzel;
-font-size:42px;
+font-size:32px;
+margin: 10px 0;
 }
 
 .creator{
 margin-top:5px;
-letter-spacing:2px;
+letter-spacing:1px;
+font-size: 14px;
 }
 
 .flag{
 position:absolute;
-top:20px;
-width:80px;
+top:10px;
+width:50px;
 }
 
-.flag-left{left:20px;}
-.flag-right{right:20px;}
+.flag-left{left:10px;}
+.flag-right{right:10px;}
 
+/* PHOTOS SECTION - Fixing Extensions */
 .warriors{
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
-gap:12px;
+gap:8px;
 margin-top:20px;
+max-width: 900px;
+margin-left: auto;
+margin-right: auto;
 }
 
 .warriors img{
-width:80px;
-height:80px;
+width:65px; 
+height:65px;
 border-radius:50%;
-border:3px solid white;
+border:2px solid white;
 object-fit:cover;
+box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+background: #eee; /* Agar image load na ho to light color dikhe */
 }
 
-/* CALENDAR */
-
+/* CALENDAR SECTION */
 .controls{
 margin:20px;
 }
 
 button{
-padding:8px 15px;
+padding:8px 12px;
 border:none;
 border-radius:5px;
 cursor:pointer;
 font-weight:bold;
+background: white;
+color: #ff6a00;
+margin: 2px;
 }
 
 .calendar{
@@ -88,14 +97,16 @@ padding:10px;
 .day{
 background:white;
 color:black;
-padding:15px;
+padding:10px;
 border-radius:5px;
 cursor:pointer;
+font-size: 14px;
 }
 
 .special{
 background:#ffcc00;
 font-weight:bold;
+border: 2px solid #ff6a00;
 }
 
 .details{
@@ -108,13 +119,11 @@ max-width:800px;
 display:none;
 text-align:left;
 }
-
 </style>
 </head>
 <body>
 
 <div class="top">
-
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Bhagwa_Dhwaj.svg/120px-Bhagwa_Dhwaj.svg.png" class="flag flag-left">
 <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" class="flag flag-right">
 
@@ -122,48 +131,46 @@ text-align:left;
 <div class="creator">⚔ Designed & Presented by Vaibhav Rishi ⚔</div>
 
 <div class="warriors">
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Maharana_Pratap.jpg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Shivaji_British_Museum.jpg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Bhagat_Singh_1929.jpg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Chandra_Shekhar_Azad.jpg">
-</div>
-
+    <img src="1.jpg.jpeg">
+    <img src="2.jpg.jpeg">
+    <img src="3.jpg.jpeg">
+    <img src="4.jpg.jpeg">
+    <img src="5.jpg.jpeg">
+    <img src="6.jpg.jpeg">
+    <img src="7.jpg.jpeg">
+    <img src="8.jpg.jpeg">
+    <img src="9.jpg.jpeg">
+    <img src="10.jpg.jpeg">
+    <img src="11.jpg.jpeg">
+    <img src="13.jpg.jpeg">
+    <img src="14.jpg.jpeg">
+    </div>
 </div>
 
 <div class="controls">
 <button onclick="prevYear()">◀ Year</button>
 <button onclick="prevMonth()">◀ Month</button>
-<span id="monthYear"></span>
+<span id="monthYear" style="font-weight: bold; font-size: 1.2em;"></span>
 <button onclick="nextMonth()">Month ▶</button>
 <button onclick="nextYear()">Year ▶</button>
 </div>
 
 <div class="calendar" id="calendar"></div>
-
 <div id="details" class="details"></div>
 
 <script>
-
 let date = new Date();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
 const specialDates = {
-"2-19": { 
-title:"Chhatrapati Shivaji Maharaj",
-info:"Birth: 19 February 1630 | जन्म: 19 फरवरी 1630<br>Swargwas: 3 April 1680 | स्वर्गवास: 3 अप्रैल 1680"
-},
-"3-23": {
-title:"Bhagat Singh",
-info:"Birth: 28 September 1907 | जन्म: 28 सितंबर 1907<br>Shahadat: 23 March 1931 | शहादत: 23 मार्च 1931"
-}
+"2-19": { title:"Chhatrapati Shivaji Maharaj", info:"Birth: 19 February 1630" },
+"3-23": { title:"Bhagat Singh", info:"Shahadat: 23 March 1931" }
 };
 
 function generateCalendar(month, year){
-
 const calendar = document.getElementById("calendar");
 calendar.innerHTML="";
-
 const monthYear = document.getElementById("monthYear");
 monthYear.innerHTML = new Date(year,month).toLocaleString("default",{month:"long"}) + " " + year;
 
@@ -176,63 +183,31 @@ calendar.appendChild(empty);
 }
 
 for(let day=1;day<=daysInMonth;day++){
-
 let cell = document.createElement("div");
 cell.classList.add("day");
-
 let key = (month+1)+"-"+day;
-
 if(specialDates[key]){
 cell.classList.add("special");
 cell.innerHTML = day+" ⚔";
-cell.onclick = function(){
-showDetails(specialDates[key]);
-};
+cell.onclick = function(){ showDetails(specialDates[key]); };
 }else{
 cell.innerHTML = day;
 }
-
 calendar.appendChild(cell);
 }
-
 }
 
 function showDetails(data){
-document.getElementById("details").innerHTML =
-"<h2>"+data.title+"</h2><p>"+data.info+"</p>";
+document.getElementById("details").innerHTML = "<h2>"+data.title+"</h2><p>"+data.info+"</p>";
 document.getElementById("details").style.display="block";
 }
 
-function prevMonth(){
-currentMonth--;
-if(currentMonth<0){
-currentMonth=11;
-currentYear--;
-}
-generateCalendar(currentMonth,currentYear);
-}
-
-function nextMonth(){
-currentMonth++;
-if(currentMonth>11){
-currentMonth=0;
-currentYear++;
-}
-generateCalendar(currentMonth,currentYear);
-}
-
-function prevYear(){
-currentYear--;
-generateCalendar(currentMonth,currentYear);
-}
-
-function nextYear(){
-currentYear++;
-generateCalendar(currentMonth,currentYear);
-}
+function prevMonth(){ currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} generateCalendar(currentMonth,currentYear); }
+function nextMonth(){ currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} generateCalendar(currentMonth,currentYear); }
+function prevYear(){ currentYear--; generateCalendar(currentMonth,currentYear); }
+function nextYear(){ currentYear++; generateCalendar(currentMonth,currentYear); }
 
 generateCalendar(currentMonth,currentYear);
-
 </script>
 
 </body>
