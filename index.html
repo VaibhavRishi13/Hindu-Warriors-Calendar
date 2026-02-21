@@ -1,132 +1,151 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Hindu Warriors Dynamic Calendar</title>
+    <title>Hindu Warriors Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #ffcc80, #ffe0b2);
-    text-align: center;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
 
-h1{
-    color: darkred;
-}
+        h1 {
+            margin-bottom: 10px;
+        }
 
-.year{
-    font-size: 22px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
+        button {
+            padding: 8px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
 
-.calendar-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+        .calendar-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-.month{
-    border: 1px solid #444;
-    margin: 10px;
-    padding: 10px;
-    width: 250px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px gray;
-}
+        .month {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
 
-.month h3{
-    background-color: orange;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-table{
-    width: 100%;
-    border-collapse: collapse;
-}
+        th, td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            font-size: 14px;
+        }
 
-th, td{
-    border: 1px solid #ddd;
-    padding: 5px;
-    font-size: 14px;
-}
+        th {
+            background: #ff9933;
+            color: white;
+        }
 
-th{
-    background-color: #ff9800;
-    color: white;
-}
-</style>
+        .credit {
+            position: fixed;
+            bottom: 10px;
+            right: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Hindu Warriors Historical Calendar</h1>
-<div class="year" id="year"></div>
+<h1>Hindu Warriors Calendar</h1>
+<h2 id="yearTitle"></h2>
+
+<button onclick="nextYear()">Next Year ➜</button>
 
 <div class="calendar-container" id="calendar"></div>
-    
+
+<div class="credit">© Made by Vaibhav Rishi</div>
+
 <script>
-let current year = new 
-    Date().getFullYear();
-document.getElementById("year").innerText = "Year: " + year;
 
-const months = [
-"January","February","March","April","May","June",
-"July","August","September","October","November","December"
-];
-const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const container = document.getElementById("calendar");
-for(let m = 0; m < 12; m++){
-    const monthDiv = document.createElement("div");
-    monthDiv.classList.add("month");
-    const title = document.createElement("h3");
-    title.innerText = months[m];
-    monthDiv.appendChild(title);
-    const table = document.createElement("table");
-    const headerRow = document.createElement("tr");
-    days.forEach(day=>{
-        const th = document.createElement("th");
-        th.innerText = day;
-        headerRow.appendChild(th);
-    });
-    table.appendChild(headerRow);
+let currentYear = new Date().getFullYear();
 
-    const firstDay = new Date(year, m, 1).getDay();
-    const totalDays = new Date(year, m + 1, 0).getDate();
+function generateCalendar(year) {
 
-    let date = 1;
-    for(let i=0; i<6; i++){
-        const row = document.createElement("tr");
-        for(let j=0; j<7; j++){
-            const cell = document.createElement("td");
+    document.getElementById("yearTitle").innerText = year;
+    const container = document.getElementById("calendar");
+    container.innerHTML = "";
 
-            if(i === 0 && j < firstDay){
-                cell.innerText = "";
-            } else if(date > totalDays){
-                break;
-            } else{
-                cell.innerText = date;
-                date++;
+    const months = [
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    ];
+
+    for (let m = 0; m < 12; m++) {
+
+        let monthDiv = document.createElement("div");
+        monthDiv.className = "month";
+
+        let title = document.createElement("h3");
+        title.innerText = months[m];
+        monthDiv.appendChild(title);
+
+        let table = document.createElement("table");
+
+        let headerRow = document.createElement("tr");
+        let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+        days.forEach(day => {
+            let th = document.createElement("th");
+            th.innerText = day;
+            headerRow.appendChild(th);
+        });
+
+        table.appendChild(headerRow);
+
+        let firstDay = new Date(year, m, 1).getDay();
+        let daysInMonth = new Date(year, m + 1, 0).getDate();
+
+        let row = document.createElement("tr");
+
+        for (let i = 0; i < firstDay; i++) {
+            row.appendChild(document.createElement("td"));
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+
+            if (row.children.length === 7) {
+                table.appendChild(row);
+                row = document.createElement("tr");
             }
+
+            let cell = document.createElement("td");
+            cell.innerText = d;
             row.appendChild(cell);
         }
+
         table.appendChild(row);
+        monthDiv.appendChild(table);
+        container.appendChild(monthDiv);
     }
-    monthDiv.appendChild(table);
-    container.appendChild(monthDiv);
 }
-function nextyear(){
-    currentyear++;
-    generateCalender(currentyear);
+
+function nextYear() {
+    currentYear++;
+    generateCalendar(currentYear);
 }
-    function prevyear() {
-        currentyear--;
-        generateCalendar(currentyear);
-    }
+
+generateCalendar(currentYear);
+
 </script>
+
 </body>
 </html>
