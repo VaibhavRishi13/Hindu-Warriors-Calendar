@@ -9,115 +9,115 @@
 
 <style>
 body{
-margin:0;
-font-family:Poppins;
-background:#ff6a00;
-color:white;
-text-align:center;
+    margin:0;
+    font-family:Poppins;
+    background:#ff6a00;
+    color:white;
+    text-align:center;
 }
 
 /* TOP SECTION */
 .top{
-position:relative;
-padding:40px 10px;
-background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-url('https://upload.wikimedia.org/wikipedia/commons/5/5e/Mehrangarh_Fort.jpg');
-background-size:cover;
-background-position:center;
+    position:relative;
+    padding:40px 10px;
+    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+    url('https://upload.wikimedia.org/wikipedia/commons/5/5e/Mehrangarh_Fort.jpg');
+    background-size:cover;
+    background-position:center;
 }
 
 .title{
-font-family:Cinzel;
-font-size:32px;
-margin: 10px 0;
+    font-family:Cinzel;
+    font-size:32px;
+    margin: 10px 0;
 }
 
 .creator{
-margin-top:5px;
-letter-spacing:1px;
-font-size: 14px;
+    margin-top:5px;
+    letter-spacing:1px;
+    font-size: 14px;
 }
 
 .flag{
-position:absolute;
-top:10px;
-width:50px;
+    position:absolute;
+    top:10px;
+    width:50px;
 }
 
 .flag-left{left:10px;}
 .flag-right{right:10px;}
 
-/* PHOTOS SECTION - Fixing Extensions */
+/* PHOTOS SECTION */
 .warriors{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:8px;
-margin-top:20px;
-max-width: 900px;
-margin-left: auto;
-margin-right: auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .warriors img{
-width:65px; 
-height:65px;
-border-radius:50%;
-border:2px solid white;
-object-fit:cover;
-box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
-background: #eee; /* Agar image load na ho to light color dikhe */
+    width:65px; 
+    height:65px;
+    border-radius:50%;
+    border:2px solid white;
+    object-fit:cover;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+    background: #eee;
 }
 
 /* CALENDAR SECTION */
 .controls{
-margin:20px;
+    margin:20px;
 }
 
 button{
-padding:8px 12px;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:bold;
-background: white;
-color: #ff6a00;
-margin: 2px;
+    padding:8px 12px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:bold;
+    background: white;
+    color: #ff6a00;
+    margin: 2px;
 }
 
 .calendar{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:5px;
-max-width:800px;
-margin:auto;
-padding:10px;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+    max-width:800px;
+    margin:auto;
+    padding:10px;
 }
 
 .day{
-background:white;
-color:black;
-padding:10px;
-border-radius:5px;
-cursor:pointer;
-font-size: 14px;
+    background:white;
+    color:black;
+    padding:10px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size: 14px;
 }
 
 .special{
-background:#ffcc00;
-font-weight:bold;
-border: 2px solid #ff6a00;
+    background:#ffcc00;
+    font-weight:bold;
+    border: 2px solid #ff6a00;
 }
 
 .details{
-background:white;
-color:black;
-margin:20px auto;
-padding:20px;
-border-radius:10px;
-max-width:800px;
-display:none;
-text-align:left;
+    background:white;
+    color:black;
+    margin:20px auto;
+    padding:20px;
+    border-radius:10px;
+    max-width:800px;
+    display:none;
+    text-align:left;
 }
 </style>
 </head>
@@ -144,14 +144,28 @@ text-align:left;
     <img src="11.jpg.jpeg">
     <img src="13.jpg.jpeg">
     <img src="14.jpg.jpeg">
-    </div>
+</div>
+</div>
+
+<!-- Month Buttons -->
+<div id="month-buttons" style="margin:10px">
+    <button onclick="showMonth('January')">Jan</button>
+    <button onclick="showMonth('February')">Feb</button>
+    <button onclick="showMonth('March')">Mar</button>
+    <button onclick="showMonth('April')">Apr</button>
+    <button onclick="showMonth('May')">May</button>
+    <button onclick="showMonth('June')">Jun</button>
+    <button onclick="showMonth('July')">Jul</button>
+    <button onclick="showMonth('August')">Aug</button>
+    <button onclick="showMonth('September')">Sep</button>
+    <button onclick="showMonth('October')">Oct</button>
+    <button onclick="showMonth('November')">Nov</button>
+    <button onclick="showMonth('December')">Dec</button>
 </div>
 
 <div class="controls">
 <button onclick="prevYear()">◀ Year</button>
-<button onclick="prevMonth()">◀ Month</button>
 <span id="monthYear" style="font-weight: bold; font-size: 1.2em;"></span>
-<button onclick="nextMonth()">Month ▶</button>
 <button onclick="nextYear()">Year ▶</button>
 </div>
 
@@ -159,51 +173,79 @@ text-align:left;
 <div id="details" class="details"></div>
 
 <script>
+// Calendar Logic
 let date = new Date();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
+const warriorsByMonth = {
+    "January": [
+        { name:"Bappa Rawal", dob:"1 Jan 713", death:"Shahid 775", info:"King of Mewar, fought XYZ" },
+        { name:"Maharana Kumbha", dob:"24 Jan 1433", death:"Veergati 1468", info:"Fought Sultan..." }
+    ],
+    "February":[
+        { name:"Maharana Sanga", dob:"15 Feb 1482", death:"Veergati 1528", info:"Fought Babur..." }
+    ],
+    "March":[
+        { name:"Bhagat Singh", dob:"28 Sep 1907", death:"Shahadat 23 Mar 1931", info:"Freedom fighter, fought British" }
+    ]
+};
+
 const specialDates = {
-"2-19": { title:"Chhatrapati Shivaji Maharaj", info:"Birth: 19 February 1630" },
-"3-23": { title:"Bhagat Singh", info:"Shahadat: 23 March 1931" }
+    "2-19": { title:"Chhatrapati Shivaji Maharaj", info:"Birth: 19 February 1630" },
+    "3-23": { title:"Bhagat Singh", info:"Shahadat: 23 March 1931" }
 };
 
 function generateCalendar(month, year){
-const calendar = document.getElementById("calendar");
-calendar.innerHTML="";
-const monthYear = document.getElementById("monthYear");
-monthYear.innerHTML = new Date(year,month).toLocaleString("default",{month:"long"}) + " " + year;
+    const calendar = document.getElementById("calendar");
+    calendar.innerHTML="";
+    const monthYear = document.getElementById("monthYear");
+    monthYear.innerHTML = new Date(year,month).toLocaleString("default",{month:"long"}) + " " + year;
 
-let firstDay = new Date(year,month).getDay();
-let daysInMonth = 32 - new Date(year,month,32).getDate();
+    let firstDay = new Date(year,month).getDay();
+    let daysInMonth = 32 - new Date(year,month,32).getDate();
 
-for(let i=0;i<firstDay;i++){
-let empty = document.createElement("div");
-calendar.appendChild(empty);
-}
+    for(let i=0;i<firstDay;i++){
+        let empty = document.createElement("div");
+        calendar.appendChild(empty);
+    }
 
-for(let day=1;day<=daysInMonth;day++){
-let cell = document.createElement("div");
-cell.classList.add("day");
-let key = (month+1)+"-"+day;
-if(specialDates[key]){
-cell.classList.add("special");
-cell.innerHTML = day+" ⚔";
-cell.onclick = function(){ showDetails(specialDates[key]); };
-}else{
-cell.innerHTML = day;
-}
-calendar.appendChild(cell);
-}
+    for(let day=1;day<=daysInMonth;day++){
+        let cell = document.createElement("div");
+        cell.classList.add("day");
+        let key = (month+1)+"-"+day;
+        if(specialDates[key]){
+            cell.classList.add("special");
+            cell.innerHTML = day+" ⚔";
+            cell.onclick = function(){ showDetails(specialDates[key]); };
+        }else{
+            cell.innerHTML = day;
+        }
+        calendar.appendChild(cell);
+    }
 }
 
 function showDetails(data){
-document.getElementById("details").innerHTML = "<h2>"+data.title+"</h2><p>"+data.info+"</p>";
-document.getElementById("details").style.display="block";
+    const container = document.getElementById("details");
+    container.innerHTML = "<h2>"+data.title+"</h2><p>"+data.info+"</p>";
+    container.style.display="block";
 }
 
-function prevMonth(){ currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} generateCalendar(currentMonth,currentYear); }
-function nextMonth(){ currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} generateCalendar(currentMonth,currentYear); }
+// Month-wise display
+function showMonth(month){
+    const container = document.getElementById("details");
+    container.innerHTML = ""; 
+    if(warriorsByMonth[month]){
+        warriorsByMonth[month].forEach(w=>{
+            const div = document.createElement("div");
+            div.innerHTML = `<b>${w.name}</b> - Birth: ${w.dob} | Shahid/Swargwas: ${w.death} <br> ${w.info}<hr>`;
+            container.appendChild(div);
+        });
+        container.style.display="block";
+    }
+}
+
+// Year Navigation
 function prevYear(){ currentYear--; generateCalendar(currentMonth,currentYear); }
 function nextYear(){ currentYear++; generateCalendar(currentMonth,currentYear); }
 
