@@ -6,104 +6,20 @@
 <title>Hindu Warrior Calendar</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
 <style>
-body{
-    margin:0;
-    font-family:Poppins;
-    background:#ff6a00;
-    color:white;
-    text-align:center;
-}
-/* TOP */
-.top{
-    position:relative;
-    padding:40px 10px;
-    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-    url('https://upload.wikimedia.org/wikipedia/commons/5/5e/Mehrangarh_Fort.jpg');
-    background-size:cover;
-    background-position:center;
-}
-.title{
-    font-family:Cinzel;
-    font-size:32px;
-    margin: 10px 0;
-}
-.creator{
-    margin-top:5px;
-    letter-spacing:1px;
-    font-size: 14px;
-}
-.flag{
-    position:absolute;
-    top:10px;
-    width:50px;
-}
-.flag-left{left:10px;}
-.flag-right{right:10px;}
-
-/* PHOTOS */
-.warriors{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:20px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.warriors img{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    border:2px solid white;
-    object-fit:cover;
-    box-shadow:0px 4px 8px rgba(0,0,0,0.3);
-    background:#eee;
-}
-
-/* CALENDAR */
-.controls, #month-buttons{margin:10px;}
-button{
-    padding:8px 12px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-    font-weight:bold;
-    background:white;
-    color:#ff6a00;
-    margin:2px;
-}
-.calendar{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:5px;
-    max-width:800px;
-    margin:auto;
-    padding:10px;
-}
-.day{
-    background:white;
-    color:black;
-    padding:10px;
-    border-radius:5px;
-    cursor:pointer;
-    font-size:14px;
-}
-.special{
-    background:#ffcc00;
-    font-weight:bold;
-    border:2px solid #ff6a00;
-}
-.details{
-    background:white;
-    color:black;
-    margin:20px auto;
-    padding:20px;
-    border-radius:10px;
-    max-width:800px;
-    display:none;
-    text-align:left;
-}
+body{margin:0;font-family:Poppins;background:#ff6a00;color:white;text-align:center;}
+.top{position:relative;padding:40px 10px;background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('https://upload.wikimedia.org/wikipedia/commons/5/5e/Mehrangarh_Fort.jpg');background-size:cover;background-position:center;}
+.title{font-family:Cinzel;font-size:32px;margin: 10px 0;}
+.creator{margin-top:5px;letter-spacing:1px;font-size:14px;}
+.flag{position:absolute;top:10px;width:50px;}
+.flag-left{left:10px;} .flag-right{right:10px;}
+.warriors{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:20px;max-width:900px;margin:auto;}
+.warriors img{width:65px;height:65px;border-radius:50%;border:2px solid white;object-fit:cover;box-shadow:0px 4px 8px rgba(0,0,0,0.3);background:#eee;}
+.controls,#month-buttons{margin:10px;}
+button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;font-weight:bold;background:white;color:#ff6a00;margin:2px;}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;max-width:800px;margin:auto;padding:10px;}
+.day{background:white;color:black;padding:10px;border-radius:5px;cursor:pointer;font-size:14px;}
+.special{background:#ffcc00;font-weight:bold;border:2px solid #ff6a00;}
+.details{background:white;color:black;margin:20px auto;padding:20px;border-radius:10px;max-width:800px;display:none;text-align:left;}
 </style>
 </head>
 <body>
@@ -111,7 +27,6 @@ button{
 <div class="top">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Bhagwa_Dhwaj.svg/120px-Bhagwa_Dhwaj.svg.png" class="flag flag-left">
 <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" class="flag flag-right">
-
 <h1 class="title">🔥 Hindu Warrior Calendar 🔥</h1>
 <div class="creator">⚔ Designed & Presented by Vaibhav Rishi ⚔</div>
 
@@ -130,18 +45,11 @@ button{
 </div>
 
 <!-- Month Buttons -->
-<div id="month-buttons">
-<script>
-const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
-monthNames.forEach((m,i)=>{
-    document.write('<button onclick="showMonth('+i+')">'+m+'</button>');
-});
-</script>
-</div>
+<div id="month-buttons"></div>
 
 <div class="controls">
 <button onclick="prevMonth()">◀ Month</button>
-<span id="monthYear" style="font-weight:bold; font-size:1.2em;"></span>
+<span id="monthYear" style="font-weight:bold;font-size:1.2em;"></span>
 <button onclick="nextMonth()">Month ▶</button>
 <button onclick="prevYear()">◀ Year</button>
 <button onclick="nextYear()">Year ▶</button>
@@ -155,27 +63,36 @@ let date=new Date();
 let currentMonth=date.getMonth();
 let currentYear=date.getFullYear();
 
+const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 // Month-wise warriors
-const warriorsByMonth = {
+const warriorsByMonth={
     "January":[{name:"Bappa Rawal",dob:"1 Jan 713",death:"Shahid 775",info:"King of Mewar"}],
     "February":[{name:"Maharana Sanga",dob:"15 Feb 1482",death:"Veergati 1528",info:"Fought Babur"}],
     "March":[{name:"Bhagat Singh",dob:"28 Sep 1907",death:"Shahadat 23 Mar 1931",info:"Freedom fighter"}]
 };
 
-// Special dates for calendar
-const specialDates = {
-    "0-1":"Bappa Rawal",
-    "1-15":"Maharana Sanga",
-    "2-23":"Bhagat Singh"
-};
+// Special Dates
+const specialDates={"0-1":"Bappa Rawal","1-15":"Maharana Sanga","2-23":"Bhagat Singh"};
 
-// Generate calendar
+// Generate Month Buttons
+const monthBtnDiv=document.getElementById("month-buttons");
+monthNames.forEach((m,i)=>{
+    let btn=document.createElement("button");
+    btn.innerText=m;
+    btn.onclick=()=>{showMonth(i)};
+    monthBtnDiv.appendChild(btn);
+});
+
+// Generate Calendar
 function generateCalendar(month,year){
     const calendar=document.getElementById("calendar");
     calendar.innerHTML="";
     document.getElementById("monthYear").innerHTML=monthNames[month]+" "+year;
+
     let firstDay=new Date(year,month,1).getDay();
     let daysInMonth=32-new Date(year,month,32).getDate();
+
     for(let i=0;i<firstDay;i++){let empty=document.createElement("div");calendar.appendChild(empty);}
     for(let day=1;day<=daysInMonth;day++){
         let cell=document.createElement("div");
@@ -189,7 +106,7 @@ function generateCalendar(month,year){
     }
 }
 
-// Month-wise info
+// Show Month Warriors Info
 function showMonth(month){
     currentMonth=month;
     generateCalendar(currentMonth,currentYear);
@@ -206,14 +123,13 @@ function showMonth(month){
     }
 }
 
-// Month & Year navigation
+// Navigation Buttons
 function prevMonth(){currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} showMonth(currentMonth);}
 function nextMonth(){currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} showMonth(currentMonth);}
 function prevYear(){currentYear--; showMonth(currentMonth);}
 function nextYear(){currentYear++; showMonth(currentMonth);}
 
 // Initial load
-generateCalendar(currentMonth,currentYear);
 showMonth(currentMonth);
 </script>
 
