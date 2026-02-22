@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hindu Warrior Calendar</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
-
 <style>
 body{
     margin:0;
@@ -15,8 +13,7 @@ body{
     color:white;
     text-align:center;
 }
-
-/* TOP SECTION */
+/* TOP */
 .top{
     position:relative;
     padding:40px 10px;
@@ -25,29 +22,25 @@ body{
     background-size:cover;
     background-position:center;
 }
-
 .title{
     font-family:Cinzel;
     font-size:32px;
     margin: 10px 0;
 }
-
 .creator{
     margin-top:5px;
     letter-spacing:1px;
     font-size: 14px;
 }
-
 .flag{
     position:absolute;
     top:10px;
     width:50px;
 }
-
 .flag-left{left:10px;}
 .flag-right{right:10px;}
 
-/* PHOTOS SECTION */
+/* PHOTOS */
 .warriors{
     display:flex;
     justify-content:center;
@@ -58,33 +51,28 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
-
 .warriors img{
-    width:65px; 
+    width:65px;
     height:65px;
     border-radius:50%;
     border:2px solid white;
     object-fit:cover;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
-    background: #eee;
+    box-shadow:0px 4px 8px rgba(0,0,0,0.3);
+    background:#eee;
 }
 
-/* CALENDAR SECTION */
-.controls{
-    margin:20px;
-}
-
+/* CALENDAR */
+.controls, #month-buttons{margin:10px;}
 button{
     padding:8px 12px;
     border:none;
     border-radius:5px;
     cursor:pointer;
     font-weight:bold;
-    background: white;
-    color: #ff6a00;
-    margin: 2px;
+    background:white;
+    color:#ff6a00;
+    margin:2px;
 }
-
 .calendar{
     display:grid;
     grid-template-columns:repeat(7,1fr);
@@ -93,22 +81,19 @@ button{
     margin:auto;
     padding:10px;
 }
-
 .day{
     background:white;
     color:black;
     padding:10px;
     border-radius:5px;
     cursor:pointer;
-    font-size: 14px;
+    font-size:14px;
 }
-
 .special{
     background:#ffcc00;
     font-weight:bold;
-    border: 2px solid #ff6a00;
+    border:2px solid #ff6a00;
 }
-
 .details{
     background:white;
     color:black;
@@ -131,41 +116,34 @@ button{
 <div class="creator">⚔ Designed & Presented by Vaibhav Rishi ⚔</div>
 
 <div class="warriors">
-    <img src="1.jpg.jpeg">
-    <img src="2.jpg.jpeg">
-    <img src="3.jpg.jpeg">
-    <img src="4.jpg.jpeg">
-    <img src="5.jpg.jpeg">
-    <img src="6.jpg.jpeg">
-    <img src="7.jpg.jpeg">
-    <img src="8.jpg.jpeg">
-    <img src="9.jpg.jpeg">
-    <img src="10.jpg.jpeg">
-    <img src="11.jpg.jpeg">
-    <img src="13.jpg.jpeg">
-    <img src="14.jpg.jpeg">
+    <img src="images/1.jpg">
+    <img src="images/2.jpg">
+    <img src="images/3.jpg">
+    <img src="images/4.jpg">
+    <img src="images/5.jpg">
+    <img src="images/6.jpg">
+    <img src="images/7.jpg">
+    <img src="images/8.jpg">
+    <img src="images/9.jpg">
+    <img src="images/10.jpg">
 </div>
 </div>
 
 <!-- Month Buttons -->
-<div id="month-buttons" style="margin:10px">
-    <button onclick="showMonth('January')">Jan</button>
-    <button onclick="showMonth('February')">Feb</button>
-    <button onclick="showMonth('March')">Mar</button>
-    <button onclick="showMonth('April')">Apr</button>
-    <button onclick="showMonth('May')">May</button>
-    <button onclick="showMonth('June')">Jun</button>
-    <button onclick="showMonth('July')">Jul</button>
-    <button onclick="showMonth('August')">Aug</button>
-    <button onclick="showMonth('September')">Sep</button>
-    <button onclick="showMonth('October')">Oct</button>
-    <button onclick="showMonth('November')">Nov</button>
-    <button onclick="showMonth('December')">Dec</button>
+<div id="month-buttons">
+<script>
+const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+monthNames.forEach((m,i)=>{
+    document.write('<button onclick="showMonth('+i+')">'+m+'</button>');
+});
+</script>
 </div>
 
 <div class="controls">
+<button onclick="prevMonth()">◀ Month</button>
+<span id="monthYear" style="font-weight:bold; font-size:1.2em;"></span>
+<button onclick="nextMonth()">Month ▶</button>
 <button onclick="prevYear()">◀ Year</button>
-<span id="monthYear" style="font-weight: bold; font-size: 1.2em;"></span>
 <button onclick="nextYear()">Year ▶</button>
 </div>
 
@@ -173,83 +151,70 @@ button{
 <div id="details" class="details"></div>
 
 <script>
-// Calendar Logic
-let date = new Date();
-let currentMonth = date.getMonth();
-let currentYear = date.getFullYear();
+let date=new Date();
+let currentMonth=date.getMonth();
+let currentYear=date.getFullYear();
 
+// Month-wise warriors
 const warriorsByMonth = {
-    "January": [
-        { name:"Bappa Rawal", dob:"1 Jan 713", death:"Shahid 775", info:"King of Mewar, fought XYZ" },
-        { name:"Maharana Kumbha", dob:"24 Jan 1433", death:"Veergati 1468", info:"Fought Sultan..." }
-    ],
-    "February":[
-        { name:"Maharana Sanga", dob:"15 Feb 1482", death:"Veergati 1528", info:"Fought Babur..." }
-    ],
-    "March":[
-        { name:"Bhagat Singh", dob:"28 Sep 1907", death:"Shahadat 23 Mar 1931", info:"Freedom fighter, fought British" }
-    ]
+    "January":[{name:"Bappa Rawal",dob:"1 Jan 713",death:"Shahid 775",info:"King of Mewar"}],
+    "February":[{name:"Maharana Sanga",dob:"15 Feb 1482",death:"Veergati 1528",info:"Fought Babur"}],
+    "March":[{name:"Bhagat Singh",dob:"28 Sep 1907",death:"Shahadat 23 Mar 1931",info:"Freedom fighter"}]
 };
 
+// Special dates for calendar
 const specialDates = {
-    "2-19": { title:"Chhatrapati Shivaji Maharaj", info:"Birth: 19 February 1630" },
-    "3-23": { title:"Bhagat Singh", info:"Shahadat: 23 March 1931" }
+    "0-1":"Bappa Rawal",
+    "1-15":"Maharana Sanga",
+    "2-23":"Bhagat Singh"
 };
 
-function generateCalendar(month, year){
-    const calendar = document.getElementById("calendar");
+// Generate calendar
+function generateCalendar(month,year){
+    const calendar=document.getElementById("calendar");
     calendar.innerHTML="";
-    const monthYear = document.getElementById("monthYear");
-    monthYear.innerHTML = new Date(year,month).toLocaleString("default",{month:"long"}) + " " + year;
-
-    let firstDay = new Date(year,month).getDay();
-    let daysInMonth = 32 - new Date(year,month,32).getDate();
-
-    for(let i=0;i<firstDay;i++){
-        let empty = document.createElement("div");
-        calendar.appendChild(empty);
-    }
-
+    document.getElementById("monthYear").innerHTML=monthNames[month]+" "+year;
+    let firstDay=new Date(year,month,1).getDay();
+    let daysInMonth=32-new Date(year,month,32).getDate();
+    for(let i=0;i<firstDay;i++){let empty=document.createElement("div");calendar.appendChild(empty);}
     for(let day=1;day<=daysInMonth;day++){
-        let cell = document.createElement("div");
+        let cell=document.createElement("div");
         cell.classList.add("day");
-        let key = (month+1)+"-"+day;
-        if(specialDates[key]){
+        if(specialDates[month+"-"+day]){
             cell.classList.add("special");
-            cell.innerHTML = day+" ⚔";
-            cell.onclick = function(){ showDetails(specialDates[key]); };
-        }else{
-            cell.innerHTML = day;
-        }
+            cell.innerHTML=day+" ⚔";
+            cell.onclick=function(){showMonth(month);}
+        }else{cell.innerHTML=day;}
         calendar.appendChild(cell);
     }
 }
 
-function showDetails(data){
-    const container = document.getElementById("details");
-    container.innerHTML = "<h2>"+data.title+"</h2><p>"+data.info+"</p>";
-    container.style.display="block";
-}
-
-// Month-wise display
+// Month-wise info
 function showMonth(month){
-    const container = document.getElementById("details");
-    container.innerHTML = ""; 
-    if(warriorsByMonth[month]){
-        warriorsByMonth[month].forEach(w=>{
-            const div = document.createElement("div");
-            div.innerHTML = `<b>${w.name}</b> - Birth: ${w.dob} | Shahid/Swargwas: ${w.death} <br> ${w.info}<hr>`;
+    currentMonth=month;
+    generateCalendar(currentMonth,currentYear);
+    const container=document.getElementById("details");
+    container.innerHTML="";
+    let monthName=monthNames[month];
+    if(warriorsByMonth[monthName]){
+        warriorsByMonth[monthName].forEach(w=>{
+            let div=document.createElement("div");
+            div.innerHTML="<b>"+w.name+"</b> - Birth: "+w.dob+" | Shahid/Swargwas: "+w.death+"<br>"+w.info+"<hr>";
             container.appendChild(div);
         });
         container.style.display="block";
     }
 }
 
-// Year Navigation
-function prevYear(){ currentYear--; generateCalendar(currentMonth,currentYear); }
-function nextYear(){ currentYear++; generateCalendar(currentMonth,currentYear); }
+// Month & Year navigation
+function prevMonth(){currentMonth--; if(currentMonth<0){currentMonth=11;currentYear--;} showMonth(currentMonth);}
+function nextMonth(){currentMonth++; if(currentMonth>11){currentMonth=0;currentYear++;} showMonth(currentMonth);}
+function prevYear(){currentYear--; showMonth(currentMonth);}
+function nextYear(){currentYear++; showMonth(currentMonth);}
 
+// Initial load
 generateCalendar(currentMonth,currentYear);
+showMonth(currentMonth);
 </script>
 
 </body>
